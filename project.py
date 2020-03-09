@@ -11,7 +11,12 @@ parser.add_argument('-v', '--version',action='version',
 parser.add_argument('infile', type=argparse.FileType('r'))
 args=parser.parse_args()
 
-#Syfte: Samla ihop de sekvenser som var uppdelade på olika rader samt samla alla sekvenserna i en lista.
+
+if len(sys.argv) != 2:
+   print('There needs to be two arguments', file=sys.stderr)
+   sys.exit()
+
+#The function collect all sequences and store them in a list.
 def get_sequences():
     string=''
     seq=[]
@@ -29,7 +34,7 @@ def get_sequences():
         seq.append(string)
         return seq
 
-#This function calculate the GC content in 1:st, 2:nd and 3:rd position of the codon. 
+#This function calculate the GC content in 1:st, 2:nd and 3:rd position of the codon.
 def present_gc_content(seq):
     position_1=''
     position_2=''
@@ -49,7 +54,20 @@ def calculate_GC(position):
     gc = (g+c)/len(position)
     return gc
 
+def total_GC_content(seq):
+    all_seq=''
+    for sequence in seq:
+        all_seq += sequence
+    all_GC_content = calculate_GC(all_seq)
+    print('The total_GC content is {}'.format((all_GC_content)))
+
+
+
+
+#This function calculate the average length of the sequences.
+# def average_length(seq):
 def average_length(seq):
+    print(seq)
     length=0
     number_of_seq=0
     for sequence in seq:
@@ -58,10 +76,9 @@ def average_length(seq):
     average = length/number_of_seq
     print('The average length for a sequence is {} nucleotides'.format(average))
 
-
+#The two functions below calculate the longest and shortest sequence.
 def maximum_length(seq):
     return (len(max(seq, key=len)), len(min(seq, key=len)))
-
 
 def present_maxium_length(seq):
     max_length, min_length = maximum_length(seq)
@@ -69,7 +86,7 @@ def present_maxium_length(seq):
     print('The shortest sequence have {} nucleotides'.format(min_length))
 
 
-#Syfte: Ska skapa den reversa samt komplimentära sekvenserna.
+#This function create the reverse compliment sequences.!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def reverse_complement(seq):
     reverse_complement_seq=[]
     for sequence in seq:
@@ -78,7 +95,7 @@ def reverse_complement(seq):
     print("The reverse compliment sequence are '{}'".format(reverse_complement_seq[-1]))
 
 
-#Syfte: Skapa ett dictionary med key = kodon och value = hur många det finns av kodonet.
+#The function creates a dictionary with key = codon and value = the number of that codon.
 def create_codon_dict(seq):
     gen_code = ['TTT','TTC','TTA','TTG','TCT','TCC','TCA','TCG','TAT','TAC','TAA',
     'TAG','TGT','TGC','TGA','TGG','CTT','CTC','CTA','CTG','CCT','CCC','CCA','CCG',
@@ -91,23 +108,25 @@ def create_codon_dict(seq):
     for sequence in seq:
         for i in range(0,len(sequence),3):
             codon = sequence[i:i+3]
-            codon_dict[codon]+=1
+            if not len(codon)%3 == 0:
+                continue
+            else:
+                codon_dict[codon] +=1
     return codon_dict
 
-#Syfte: Sortera dictionary
+#The function sort the dictionary by value
 def sort_by_value(codon_dict):
     sortbyvalue=dict(sorted(codon_dict.items(), key=lambda t: t[1]))
     return sortbyvalue
 
 
-#Syfte: Printa det mest vanliga och minst vanliga kodonen.
+#The function select the most common and less codons and the number of them.
 def most_less_common_codon(codon_dict_sort):
     most_common_element= list(codon_dict_sort.keys())[len(codon_dict_sort)-1]
     number_most_common_element=list(codon_dict_sort.values())[len(codon_dict_sort)-1]
     less_common_element=list(codon_dict_sort.keys())[0]
     number_less_common_element=list(codon_dict_sort.values())[0]
     return (most_common_element,number_most_common_element,less_common_element,number_less_common_element)
-
 
 def present_codons(codon_dict_sort):
     most_common, number_most_common, less_common, number_less_common = most_less_common_codon(codon_dict_sort)
@@ -116,14 +135,15 @@ def present_codons(codon_dict_sort):
 
 
 def main():
-        seq=get_sequences()
-        present_gc_content(seq)
-        average_length(seq)
-        present_maxium_length(seq)
-        reverse_complement(seq)
-        codon_dict = create_codon_dict(seq)
-        codon_dict_sort = sort_by_value(codon_dict)
-        print(codon_dict_sort)
-        present_codons(codon_dict_sort)
+    seq=get_sequences()
+    present_gc_content(seq)
+    total_GC_content(seq)
+    average_length(seq)
+    present_maxium_length(seq)
+    reverse_complement(seq)
+    codon_dict = create_codon_dict(seq)
+    codon_dict_sort = sort_by_value(codon_dict)
+    #print(codon_dict_sort)
+    present_codons(codon_dict_sort)
 
 main()
