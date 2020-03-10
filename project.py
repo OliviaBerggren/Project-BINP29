@@ -62,12 +62,9 @@ def total_GC_content(seq):
     print('The total_GC content is {}'.format((all_GC_content)))
 
 
-
-
 #This function calculate the average length of the sequences.
 # def average_length(seq):
 def average_length(seq):
-    print(seq)
     length=0
     number_of_seq=0
     for sequence in seq:
@@ -92,26 +89,30 @@ def reverse_complement(seq):
     for sequence in seq:
         sequence=sequence[::-1]
         reverse_complement_seq.append(sequence.translate(str.maketrans('ACGT','TGCA')))
-    print("The reverse compliment sequence are '{}'".format(reverse_complement_seq[-1]))
+    #print("The reverse compliment sequence are '{}'".format(reverse_complement_seq[-1]))
 
 
 #The function creates a dictionary with key = codon and value = the number of that codon.
 def create_codon_dict(seq):
-    gen_code = ['TTT','TTC','TTA','TTG','TCT','TCC','TCA','TCG','TAT','TAC','TAA',
-    'TAG','TGT','TGC','TGA','TGG','CTT','CTC','CTA','CTG','CCT','CCC','CCA','CCG',
+    gen_code = ['TTT','TTC','TTA','TTG','TCT','TCC','TCA','TCG','TAT','TAC', 'TAA', 'TAG', 'TGA'
+    ,'TGT','TGC','TGG','CTT','CTC','CTA','CTG','CCT','CCC','CCA','CCG',
     'CAT','CAC','CAA','CAG','CGT','CGC','CGA','CGG','ATT','ATC','ATA','ATG','ACT',
     'ACC','ACA','ACG','AAT','AAC','AAA','AAG','AGT','AGC','AGA','AGG','GTT','GTC',
     'GTA','GTG','GCT','GCC','GCA','GCG','GAT','GAC','GAA','GAG','GGT','GGC','GGA','GGG']
+    stop_codons = ['TAA', 'TGA', 'TAG']
     codon_dict={}
     for codon in gen_code:
-        codon_dict[codon] = 0
+        if not codon in stop_codons:
+            codon_dict[codon] = 0
     for sequence in seq:
         for i in range(0,len(sequence),3):
             codon = sequence[i:i+3]
             if not len(codon)%3 == 0:
                 continue
             else:
-                codon_dict[codon] +=1
+                if not codon in stop_codons:
+                    codon_dict[codon] +=1
+    print (codon_dict)
     return codon_dict
 
 #The function sort the dictionary by value
@@ -143,7 +144,7 @@ def main():
     reverse_complement(seq)
     codon_dict = create_codon_dict(seq)
     codon_dict_sort = sort_by_value(codon_dict)
-    #print(codon_dict_sort)
+    print(codon_dict_sort)
     present_codons(codon_dict_sort)
 
 main()

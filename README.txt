@@ -1,5 +1,10 @@
 Author: Olivia Berggren
-Date: 9 mars 2020
+Date: 9 march 2020
+
+Se och följ:
+https://github.com/samtools/samtools
+
+
 
 Aim:
 The aim is to create a script that can calculate the GC-content for all three positions in the codon,
@@ -12,9 +17,6 @@ The script needs to be run with a fasta file. There should be two arguments (nam
 
 
 
-
-
-
 >>>>>>> Git
 git init (create a new repository)
 git add (prepare a commit)
@@ -23,11 +25,18 @@ git commit -m "write a message"
 >>>>>>> GitHub:
 Create a new respository called Project-BINP29.
 
-#Add my remote
+#Add remote
 git remote add origin https://github.com/OliviaBerggren/Project-BINP29.git
 
-#Send to my remote for the first time
+#Send to the remote for the first time
 git push --set-upstream origin master
 
-#Send to my remote
+#Send to the remote
+git fetch
 git push file-name
+
+ >>>>>>>>> BLAST mm
+
+Software    Version/Database                                              Date
+python3     3                                                              9 march 2020
+BLAST       nucleotide collection (nt), updated: 2019/10/03                9 march 2020
