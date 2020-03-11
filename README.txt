@@ -1,17 +1,19 @@
+Project: BINP29
 Author: Olivia Berggren
 Date: 9 march 2020
 
-Se och följ:
+>>>>>>>> Link to Github:
 https://github.com/samtools/samtools
 
 
 
 Aim:
-The aim is to create a script that can calculate the GC-content for all three positions in the codon,
+The aim is to create a script that can calculate the overall GC-content, the GC-content for all three positions in the codon
+and codon usage. Codon bias!!!!!!!?????????????
 
 >>>>>>> Python script
-The script calculate the overall GC-content, the GC-content for 1:st, 2:nd and 3:rd position in codon.
-It calculate the number of each codon, the longest-, shortest- and the average length of the sequences.
+The script calculate the overall GC-content, the GC-content in 1:st, 2:nd and 3:rd position in codon.
+It calculates the codon usage, CODON BIAS?!?!?!?!?!?!? the length of the sequence.
 
 The script needs to be run with a fasta file. There should be two arguments (name of the scrips + fasta file).
 
@@ -22,8 +24,9 @@ git init (create a new repository)
 git add (prepare a commit)
 git commit -m "write a message"
 
+
 >>>>>>> GitHub:
-Create a new respository called Project-BINP29.
+Respository called Project-BINP29.
 
 #Add remote
 git remote add origin https://github.com/OliviaBerggren/Project-BINP29.git
@@ -35,8 +38,7 @@ git push --set-upstream origin master
 git fetch
 git push file-name
 
- >>>>>>>>> BLAST mm
-
-Software    Version/Database                                              Date
-python3     3                                                              9 march 2020
-BLAST       nucleotide collection (nt), updated: 2019/10/03                9 march 2020
+ >>>>>>>>> Ensambl
+Software    Version/Database       Date
+python3     3                      9 march 2020
+Ensembl    ?!?!?!?!?!?!?!?            9 march 2020

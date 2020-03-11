@@ -3,19 +3,17 @@
 #Fixa: Filen som man sätter in  måste sluta på fna!!!!!!!
 
 import sys
-import argparse
-
-usage='This program count the GC content i GC1, GC2 and GC3 for a fasta file, the longest/shortest sequence, the average lenght of the sequences and how many times each codon occur.'
-parser=argparse.ArgumentParser(description=usage)
-parser.add_argument('-v', '--version',action='version',
-    version='%(prog)s 1.0')
-parser.add_argument('infile', type=argparse.FileType('r'))
-args=parser.parse_args()
+usage='This program count the GC content i GC1, GC2 and GC3 for a fasta file, the length of the sequence and the codon usage.'
 
 
 if len(sys.argv) != 2:
-   print('There needs to be two arguments. The second argument needs to be a fasta file', file=sys.stderr)
+   print('This is a friendly reminder that there needs to be two arguments. The second argument needs to be a fasta file', file=sys.stderr)
    sys.exit()
+
+if not '.fasta' in sys.argv[1] or '.fna' in sys.argv[1]:
+    print('This is a friendly reminder that the input file needs to be a fasta file and have the substring .fasta or .fna', file=sys.stderr)
+    sys.exit()
+
 
 #The function collect all sequences and store them in a list.
 def get_sequences():
@@ -44,9 +42,12 @@ def present_gc_content(seq):
         position_1 +=sequence[::3]
         position_2 +=sequence[1::3]
         position_3 +=sequence[2::3]
-    print('GC content for 1:st position in codon is {}'.format(calculate_GC(position_1)))
-    print('GC content for 2:nd position in codon is {}'.format(calculate_GC(position_2)))
-    print('GC content for 3:rd position in codon is {}'.format(calculate_GC(position_3)))
+    #print('GC content for 1:st position in codon is {}'.format(calculate_GC(position_1)))
+    #print('GC content for 2:nd position in codon is {}'.format(calculate_GC(position_2)))
+    #print('GC content for 3:rd position in codon is {}'.format(calculate_GC(position_3)))
+    print('GC1 \t {}'.format(round(calculate_GC(position_1), 3)))
+    print('GC2 \t {}'.format(round(calculate_GC(position_2), 3)))
+    print('GC3 \t {}'.format(round(calculate_GC(position_3), 3)))
 
 
 def calculate_GC(position):
@@ -60,38 +61,18 @@ def total_GC_content(seq):
     for sequence in seq:
         all_seq += sequence
     all_GC_content = calculate_GC(all_seq)
-    print('The total_GC content is {}'.format((all_GC_content)))
+    print('GC_Percent \t {}'.format((round(all_GC_content*100, 3))))
 
 
-#This function calculate the average length of the sequences.
-# def average_length(seq):
-def average_length(seq):
+#This function calculate the length of the sequence.
+def length(seq):
     length=0
     number_of_seq=0
     for sequence in seq:
         number_of_seq +=1
         length +=len(sequence)
-    average = length/number_of_seq
-    print('The average length for a sequence is {} nucleotides'.format(average))
-
-#The two functions below calculate the longest and shortest sequence.
-def maximum_length(seq):
-    return (len(max(seq, key=len)), len(min(seq, key=len)))
-
-def present_maxium_length(seq):
-    max_length, min_length = maximum_length(seq)
-    print('The longest sequence have {} nucleotides'.format(max_length))
-    print('The shortest sequence have {} nucleotides'.format(min_length))
-
-
-#This function create the reverse compliment sequences.!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def reverse_complement(seq):
-    reverse_complement_seq=[]
-    for sequence in seq:
-        sequence=sequence[::-1]
-        reverse_complement_seq.append(sequence.translate(str.maketrans('ACGT','TGCA')))
-    #print("The reverse compliment sequence are '{}'".format(reverse_complement_seq[-1]))
-
+    length_seq = length/number_of_seq
+    print('Length \t {}'.format(length_seq))
 
 #The function creates a dictionary with key = codon and value = the number of that codon.
 def create_codon_dict(seq):
@@ -113,12 +94,13 @@ def create_codon_dict(seq):
             else:
                 if not codon in stop_codons:
                     codon_dict[codon] +=1
-    print (codon_dict)
     return codon_dict
 
 #The function sort the dictionary by value
 def sort_by_value(codon_dict):
     sortbyvalue=dict(sorted(codon_dict.items(), key=lambda t: t[1]))
+    for key, value in sortbyvalue.items():
+        print (key, value)
     return sortbyvalue
 
 
@@ -132,20 +114,17 @@ def most_less_common_codon(codon_dict_sort):
 
 def present_codons(codon_dict_sort):
     most_common, number_most_common, less_common, number_less_common = most_less_common_codon(codon_dict_sort)
-    print('The most common codon is {} and it occur {} times'.format(most_common, number_most_common))
-    print('The less common codon is {} and it occur {} times'.format(less_common,number_less_common))
+    print('Most common codon:\t{}\t{}'.format(most_common, number_most_common))
+    print('Less common codon:\t{}\t{}'.format(less_common,number_less_common))
 
-
+print("Statistic"+"\t"+"Species")
 def main():
     seq=get_sequences()
-    present_gc_content(seq)
+    length(seq)
     total_GC_content(seq)
-    average_length(seq)
-    present_maxium_length(seq)
-    reverse_complement(seq)
+    present_gc_content(seq)
     codon_dict = create_codon_dict(seq)
     codon_dict_sort = sort_by_value(codon_dict)
-    print(codon_dict_sort)
     present_codons(codon_dict_sort)
 
 main()
