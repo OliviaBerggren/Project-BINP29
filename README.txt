@@ -2,43 +2,28 @@ Project: BINP29
 Author: Olivia Berggren
 Date: 9 march 2020
 
->>>>>>>> Link to Github:
-https://github.com/samtools/samtools
-
-
-
+>>>>>>>>>
 Aim:
-The aim is to create a script that can calculate the overall GC-content, the GC-content for all three positions in the codon
-and codon usage. Codon bias!!!!!!!?????????????
-
->>>>>>> Python script
-The script calculate the overall GC-content, the GC-content in 1:st, 2:nd and 3:rd position in codon.
-It calculates the codon usage, CODON BIAS?!?!?!?!?!?!? the length of the sequence.
-
-The script needs to be run with a fasta file. There should be two arguments (name of the scrips + fasta file).
+The aim was to create a software that could give information about a sequence in a fasta file. The software should be easy to use and the output
+should be easy to understand.
 
 
+>>>>>>> Python script usage
+The script calculate the overall GC-content, the GC-content codon position 1,2 and 3, codon usage, codon frequency
+and the length of the sequence.
 
->>>>>>> Git
-git init (create a new repository)
-git add (prepare a commit)
-git commit -m "write a message"
+The script needs to be run with a fasta file and have two outputs files. There should be four arguments:
+1. name of the scrips (software_fasta1.py)
+2. fasta file
+3. name for the output-file for the codon usage (the user decide the name)
+4. name for the output-file for the codon frequency (the user decide the name)
+The information about GC will be print to standard output.
 
+The fasta file must have the suffix .fna.
 
->>>>>>> GitHub:
-Respository called Project-BINP29.
+The software can be tested with the data files, BRAC2_human.fna, BRAC2_mouse.fna, BRAC2_elephant.fna.
+Download them from Github resository:
+https://github.com/OliviaBerggren/Project-BINP29
 
-#Add remote
-git remote add origin https://github.com/OliviaBerggren/Project-BINP29.git
-
-#Send to the remote for the first time
-git push --set-upstream origin master
-
-#Send to the remote
-git fetch
-git push file-name
-
- >>>>>>>>> Ensambl
-Software    Version/Database       Date
-python3     3                      9 march 2020
-Ensembl    ?!?!?!?!?!?!?!?            9 march 2020
+Example:
+python3 software_fasta1.py BRAC2_human.fna codon_usage_human_BRAC2 codon_frequency_human_BRAC2
