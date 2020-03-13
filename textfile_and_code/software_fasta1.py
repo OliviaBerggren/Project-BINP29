@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-#Fixa: Filen som man sätter in  måste sluta på fna!!!!!!!
-
 import sys
 usage='This program count the GC content i GC1, GC2 and GC3 for a fasta file, the length of the sequence and the codon usage.'
 
